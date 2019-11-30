@@ -126,7 +126,7 @@ $response = $cpanel->callUAPI($Module, $function, $parameters_array);
 Example if you want to add new `ftp` account, documetation is available at [CPanel UAPI - Ftp::add_ftp](https://documentation.cpanel.net/display/DD/UAPI+Functions+-+Ftp%3A%3Aadd_ftp) then use the method as represented below:
 ```php
 $cpanel = new CPanel();  
-$Method = 'Ftp';
+$Module = 'Ftp';
 $function = 'add_ftp';
 $parameters_array = [
 'user'=>'ftp_username',
