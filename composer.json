@@ -4,7 +4,7 @@
   "keywords": ["laravel", "cpanel", "cpanel api", "cpanel uapi"],
   "homepage": "https://www.webreinvent.com",
   "license": "MIT",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "authors": [
     {
       "name": "WebReinvent",
