@@ -176,7 +176,7 @@ class CPanel {
             $res = json_decode($response);
 
             $response = [];
-            if($res->status == 0)
+            if(isset($res) && isset($res->status) && $res->status == 0)
             {
                 $response['status'] = 'failed';
                 $response['errors'][] = $res->errors;
