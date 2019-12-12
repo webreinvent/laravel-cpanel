@@ -122,7 +122,7 @@ class CPanel {
     //-----------------------------------------------------
     public function callUAPI($Module, $function, $parameters_array = array())
     {
-        $this->call($Module, $function, $parameters_array);
+        return $this->call($Module, $function, $parameters_array);
     }
     //-----------------------------------------------------
 
@@ -137,7 +137,10 @@ class CPanel {
 
         $url = $this->protocol.'://'.$this->domain . ':' . $this->port . '/execute/' . $module;
         $url .= "/".$function;
-        $url .= '?'. $parameters;
+        if(count($args) > 0)
+        {
+            $url .= '?'. $parameters;
+        }
 
         $headers = array(
             "Authorization: cpanel " . $this->username . ':' . $this->token,
