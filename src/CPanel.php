@@ -137,6 +137,7 @@ class CPanel {
 
         $url = $this->protocol.'://'.$this->domain . ':' . $this->port . '/execute/' . $module;
         $url .= "/".$function;
+        
         if(count($args) > 0)
         {
             $url .= '?'. $parameters;
