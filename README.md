@@ -118,7 +118,7 @@ $cpanel = new CPanel();
 $response = $cpanel->setAllPrivilegesOnDatabase($database_user, $database_name);
 ```
 
-Those where the available method but you can call all the method available at  [CPanel UAPI](https://documentation.cpanel.net/display/DD/Guide+to+UAPI) using following method:
+Those were the available method but you can also call all the method available at  [CPanel UAPI](https://documentation.cpanel.net/display/DD/Guide+to+UAPI) using following method:
 ```php
 $cpanel = new CPanel();  
 $response = $cpanel->callUAPI($Module, $function, $parameters_array);
