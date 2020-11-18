@@ -4,7 +4,7 @@
   "keywords": ["laravel", "cpanel", "cpanel api", "cpanel uapi"],
   "homepage": "https://www.webreinvent.com",
   "license": "MIT",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "authors": [
     {
       "name": "WebReinvent",
@@ -16,7 +16,7 @@
   },
   "autoload": {
     "psr-4": {
-      "WebReinvent\\CPanel\\": "src/"
+      "WebReinvent\\CPanel\\": "/"
     },
     "files": [
     ]
