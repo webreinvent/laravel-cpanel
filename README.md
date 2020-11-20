@@ -63,6 +63,12 @@ CPANEL_PORT=
 CPANEL_API_TOKEN=
 CPANEL_USERNAME=
 ```
+or
+
+```php
+$cpanel = new CPanel($cpanel_domain=null, $cpanel_api_token=null, $cpanel_username=null, $protocol='https', $port=2083);
+```
+
 To generate `CPANEL_API_TOKEN`, login to the `CPanel >> SECURITY >> Manage API Tokens >> Create`.
 
 ## Usages & available methods 
@@ -78,7 +84,7 @@ If your CPanel username is `foo` then your database name
 | should be `foo_website`.
 
 ```php
-$cpanel = new CPanel();  
+$cpanel = new CPanel();
 $response = $cpanel->createDatabase('cpanelusername_databasename');
 ```
 Find More Details at [CPanel UAPI - Mysql::create_database](https://documentation.cpanel.net/display/DD/UAPI+Functions+-+Mysql::create_database)
