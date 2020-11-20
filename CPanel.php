@@ -22,15 +22,26 @@ class CPanel {
 
     //-----------------------------------------------------
 
-    public function __construct()
+    public function __construct($cpanel_domain=null, $cpanel_api_token=null, $cpanel_username=null, $protocol='https', $port=2083)
     {
+
         $this->config = Config::get('cpanel');
 
-        $this->protocol = $this->config['protocol'];
-        $this->domain = $this->config['domain'];
-        $this->port = $this->config['port'];
-        $this->username = $this->config['username'];
-        $this->token = $this->config['api_token'];
+        if(isset($this->config) && isset($this->config['domain']))
+        {
+            $this->protocol = $this->config['protocol'];
+            $this->domain = $this->config['domain'];
+            $this->port = $this->config['port'];
+            $this->username = $this->config['username'];
+            $this->token = $this->config['api_token'];
+        } else{
+            $this->protocol = $protocol;
+            $this->port = $port;
+            $this->domain = $cpanel_domain;
+            $this->username = $cpanel_username;
+            $this->token = $cpanel_api_token;
+        }
+
 
     }
 
@@ -137,7 +148,7 @@ class CPanel {
 
         $url = $this->protocol.'://'.$this->domain . ':' . $this->port . '/execute/' . $module;
         $url .= "/".$function;
-        
+
         if(count($args) > 0)
         {
             $url .= '?'. $parameters;
