@@ -27,19 +27,19 @@ class CPanel {
 
         $this->config = Config::get('cpanel');
 
-        if(isset($this->config) && isset($this->config['domain']))
+        if(isset($cpanel_domain))
         {
-            $this->protocol = $this->config['protocol'];
-            $this->domain = $this->config['domain'];
-            $this->port = $this->config['port'];
-            $this->username = $this->config['username'];
-            $this->token = $this->config['api_token'];
-        } else{
             $this->protocol = $protocol;
             $this->port = $port;
             $this->domain = $cpanel_domain;
             $this->username = $cpanel_username;
             $this->token = $cpanel_api_token;
+        } else{
+            $this->protocol = $this->config['protocol'];
+            $this->domain = $this->config['domain'];
+            $this->port = $this->config['port'];
+            $this->username = $this->config['username'];
+            $this->token = $this->config['api_token'];
         }
 
 
