@@ -167,7 +167,7 @@ class CPanel {
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 100020,
+            CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_POSTFIELDS => "",
@@ -183,15 +183,15 @@ class CPanel {
 
         curl_close($curl);
 
-
         $response['inputs']['url'] = $url;
-        $response['data']['header_size'] = $header_size;
-        $response['data']['header'] = $header;
-        $response['data']['response'] = json_decode($curl_res);
-        $response['data']['body'] = $body;
-        $response['data']['error'] = $err;
-        $response['data']['err_no'] = $err_no;
-
+        $response['curl_response'] = [
+            'header_size' => $header_size,
+            'header' => $header,
+            'response' => $curl_res,
+            'body' => $body,
+            'error' => $err,
+            'err_no' => $err_no,
+        ];
 
         if ($err || $err_no) {
 
@@ -207,6 +207,7 @@ class CPanel {
                 $response['inputs']['url'] = $url;
             } else
             {
+                $response['data'] = json_decode($curl_res);
                 $response['status'] = 'success';
                 $response['inputs']['url'] = $url;
             }
