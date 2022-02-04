@@ -142,7 +142,7 @@ class CPanel {
         $parameters = '';
         if ( count($args) > 0 ) {
             foreach( $args as $key => $value ) {
-                $parameters .= '&' . $key . '=' . $value;
+                $parameters .= '&' . $key . '=' . urlencode($value);
             }
         }
 
@@ -167,30 +167,39 @@ class CPanel {
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
+            CURLOPT_TIMEOUT => 100020,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_POSTFIELDS => "",
             CURLOPT_HTTPHEADER => $headers,
         ));
 
-        $response = curl_exec($curl);
+        $curl_res = curl_exec($curl);
         $err = curl_error($curl);
+        $err_no = curl_errno($curl);
+        $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+        $header = substr($curl_res, 0, $header_size);
+        $body = substr($curl_res, $header_size);
 
         curl_close($curl);
 
 
-        if ($err) {
+        $response['inputs']['url'] = $url;
+        $response['data']['header_size'] = $header_size;
+        $response['data']['header'] = $header;
+        $response['data']['response'] = json_decode($curl_res);
+        $response['data']['body'] = $body;
+        $response['data']['error'] = $err;
+        $response['data']['err_no'] = $err_no;
+
+
+        if ($err || $err_no) {
 
             $response['status'] = 'failed';
             $response['errors'] = $err;
-            $response['inputs']['url'] = $url;
 
         } else {
 
-            $res = json_decode($response);
-
-            $response = [];
             if(isset($res) && isset($res->status) && $res->status == 0)
             {
                 $response['status'] = 'failed';
@@ -199,7 +208,6 @@ class CPanel {
             } else
             {
                 $response['status'] = 'success';
-                $response['data'] = $res;
                 $response['inputs']['url'] = $url;
             }
         }
