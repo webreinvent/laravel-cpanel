@@ -183,35 +183,47 @@ class CPanel {
 
         curl_close($curl);
 
+        $curl_response_decoded = json_decode($curl_res);
+
         $response['inputs']['url'] = $url;
+
         $response['curl_response'] = [
+            'curl_response' => $curl_res,
+            'curl_response_decoded' => $curl_response_decoded,
             'header_size' => $header_size,
             'header' => $header,
-            'response' => $curl_res,
             'body' => $body,
             'error' => $err,
             'err_no' => $err_no,
         ];
+
+
 
         if ($err || $err_no) {
 
             $response['status'] = 'failed';
             $response['errors'] = $err;
 
-        } else {
+        } if(isset($curl_response_decoded->errors) && count($curl_response_decoded->errors) > 0)
+    {
+        $response['status'] = 'failed';
+        $response['errors'] = $curl_response_decoded->errors;
 
-            if(isset($res) && isset($res->status) && $res->status == 0)
-            {
-                $response['status'] = 'failed';
-                $response['errors'][] = $res->errors;
-                $response['inputs']['url'] = $url;
-            } else
-            {
-                $response['data'] = json_decode($curl_res);
-                $response['status'] = 'success';
-                $response['inputs']['url'] = $url;
-            }
+    } else {
+
+        if(isset($res) && isset($res->status) && $res->status == 0)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $res->errors;
+            $response['inputs']['url'] = $url;
+        } else
+        {
+            $response['data'] = json_decode($curl_res);
+            $response['status'] = 'success';
+            $response['inputs']['url'] = $url;
         }
+    }
+
 
         return $response;
     }
