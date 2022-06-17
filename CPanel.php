@@ -174,6 +174,8 @@ class CPanel {
             CURLOPT_HTTPHEADER => $headers,
         ));
 
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+
         $curl_res = curl_exec($curl);
         $err = curl_error($curl);
         $err_no = curl_errno($curl);
@@ -191,6 +193,7 @@ class CPanel {
             'curl_response' => $curl_res,
             'curl_response_decoded' => $curl_response_decoded,
             'header_size' => $header_size,
+            'headers' => $headers,
             'header' => $header,
             'body' => $body,
             'error' => $err,
