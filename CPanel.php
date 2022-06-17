@@ -199,15 +199,18 @@ class CPanel {
 
 
 
-        if ($err || $err_no) {
+        if (!empty($err_no)) {
 
             $response['status'] = 'failed';
             $response['errors'] = $err;
+            return $response;
 
-        } if(isset($curl_response_decoded->errors) && count($curl_response_decoded->errors) > 0)
+        } if(isset($curl_response_decoded->errors)
+        && count($curl_response_decoded->errors) > 0)
     {
         $response['status'] = 'failed';
         $response['errors'] = $curl_response_decoded->errors;
+        return $response;
 
     } else {
 
@@ -215,17 +218,16 @@ class CPanel {
         {
             $response['status'] = 'failed';
             $response['errors'][] = $res->errors;
-            $response['inputs']['url'] = $url;
+            return $response;
         } else
         {
             $response['data'] = json_decode($curl_res);
             $response['status'] = 'success';
-            $response['inputs']['url'] = $url;
+            return $response;
         }
     }
 
 
-        return $response;
     }
 
     //-----------------------------------------------------
