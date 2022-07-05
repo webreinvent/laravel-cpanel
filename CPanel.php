@@ -174,6 +174,7 @@ class CPanel {
             CURLOPT_HTTPHEADER => $headers,
         ));
 
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 
         $curl_res = curl_exec($curl);
