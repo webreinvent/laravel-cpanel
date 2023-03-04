@@ -109,7 +109,7 @@ class CPanel {
     public function deleteDatabaseUser($username)
     {
         $module = "Mysql";
-        $function = "delete_database";
+        $function = "delete_user";
         $parameters = array(
             'name'    => $username
         );
